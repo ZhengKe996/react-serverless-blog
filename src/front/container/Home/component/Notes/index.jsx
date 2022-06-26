@@ -1,7 +1,7 @@
 import styles from "./note.module.scss";
 const Notes = () => {
   return (
-    <div className={styles.notes}>
+    <div className="wrapper">
       <ul className={styles.list}>
         <li className={styles.item}>
           <img
