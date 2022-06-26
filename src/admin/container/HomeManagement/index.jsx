@@ -20,11 +20,36 @@ const HomeManagement = () => {
   };
 
   const handleSaveBtnClick = () => {
-    const listData = JSON.stringify(areaListRef.current.list);
-    window.localStorage.homeData = listData;
-    window.localStorage.title = pageSettingRef.current.title;
-    window.localStorage.description = pageSettingRef.current.description;
+    const schema = {
+      name: "Page",
+      attributes: {},
+      children: [
+        {
+          name: "Banner",
+          attributes: {
+            title: pageSettingRef.current.title,
+            description: pageSettingRef.current.description,
+          },
+        },
+        {
+          name: "NoteList",
+          attributes: {},
+        },
+        {
+          name: "Footer",
+          attributes: {},
+        },
+      ],
+    };
+    areaListRef.current.list.forEach((item) => {
+      schema.children.push({
+        name: "Area",
+      });
+    });
+
+    window.localStorage.schema = JSON.stringify(schema);
   };
+
   const pageSettingRef = useRef();
   const areaListRef = useRef();
 

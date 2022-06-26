@@ -1,8 +1,13 @@
 import styles from "./banner.module.scss";
+import { parseJsonByString } from "../../../../../utils";
+const schema = parseJsonByString(window.localStorage.schema, {});
+const bannerSchema = schema?.children?.[0] || {};
 
 const Banner = () => {
-  const title = window.localStorage.title || "这是一个小站";
-  const description = window.localStorage.description || "这是一个小段描述";
+  const title = bannerSchema?.attributes?.title || "这是一个小站";
+  const description =
+    bannerSchema?.attributes?.description || "这是一个小段描述";
+
   return (
     <div className="wrapper">
       <div className={styles.banner}>
