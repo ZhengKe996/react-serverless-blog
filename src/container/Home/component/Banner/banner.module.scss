@@ -1,0 +1,39 @@
+.banner {
+  position: relative;
+  width: 1280px;
+  height: 530px;
+  margin: 0 auto;
+  background-image: url("../../../../assets/bg.jpeg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 1px solid #ccc;
+  .info {
+    position: absolute;
+    height: 150px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    .avatar {
+      position: absolute;
+      top: -70px;
+      left: 40px;
+      width: 200px;
+      height: 200px;
+      background-size: contain;
+      background-image: url("../../../../assets/avatar.jpg");
+      border-radius: 20px;
+    }
+    .title {
+      line-height: 50px;
+      margin-left: 280px;
+      font-size: 28px;
+      color: #333;
+    }
+    .description {
+      line-height: 32px;
+      margin-left: 280px;
+      font-size: 18px;
+      color: #030303;
+    }
+  }
+}

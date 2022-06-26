@@ -1,5 +1,8 @@
+import "normalize.css";
+import Home from "./container/Home";
+
 function App() {
-  return <div>Hello World</div>;
+  return <Home />;
 }
 
 export default App;
