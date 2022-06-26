@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Layout, Menu } from "antd";
 import styles from "./style.module.scss";
-
+import AreaList from "./component/AreaList";
 const { Header, Sider, Content } = Layout;
 
 const useCollapsed = () => {
@@ -47,7 +47,9 @@ const HomeManagement = () => {
             </span>
           )}
         </Header>
-        <Content className={styles.content}>Content</Content>
+        <Content className={styles.content}>
+          <AreaList />
+        </Content>
       </Layout>
     </Layout>
   );
