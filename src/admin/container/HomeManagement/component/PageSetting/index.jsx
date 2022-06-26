@@ -5,14 +5,8 @@ import styles from "./page-setting.module.scss";
 const { TextArea } = Input;
 
 const PageSetting = (props, ref) => {
-  const [title, setTitle] = useState(
-    JSON.parse(window.localStorage.schema)?.children?.[0]?.attributes?.title ||
-      ""
-  );
-  const [description, setDescription] = useState(
-    JSON.parse(window.localStorage.schema)?.children?.[0]?.attributes
-      ?.description || ""
-  );
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   useImperativeHandle(ref, () => {
     return {
       title: title,

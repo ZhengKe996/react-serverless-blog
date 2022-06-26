@@ -19,38 +19,8 @@ const HomeManagement = () => {
     window.location.href = "/";
   };
 
-  const handleSaveBtnClick = () => {
-    const schema = {
-      name: "Page",
-      attributes: {},
-      children: [
-        {
-          name: "Banner",
-          attributes: {
-            title: pageSettingRef.current.title,
-            description: pageSettingRef.current.description,
-          },
-        },
-        {
-          name: "NoteList",
-          attributes: {},
-        },
-        {
-          name: "Footer",
-          attributes: {},
-        },
-      ],
-    };
-    areaListRef.current.list.forEach((item) => {
-      schema.children.push({
-        name: "Area",
-      });
-    });
+  const handleSaveBtnClick = () => {};
 
-    window.localStorage.schema = JSON.stringify(schema);
-  };
-
-  const pageSettingRef = useRef();
   const areaListRef = useRef();
 
   return (
@@ -83,7 +53,6 @@ const HomeManagement = () => {
           )}
         </Header>
         <Content className={styles.content}>
-          <PageSetting ref={pageSettingRef} />
           <AreaList ref={areaListRef} />
 
           <div className={styles.save}>

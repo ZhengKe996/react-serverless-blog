@@ -2,12 +2,9 @@ import { useState, forwardRef, useImperativeHandle } from "react";
 import { Button } from "antd";
 
 import styles from "./arealist.module.scss";
-import { parseJsonByString } from "../../../../../utils";
-const schema = parseJsonByString(window.localStorage.schema, {});
-const listData = schema?.children?.splice(3) || [];
 
 const AreaList = (props, ref) => {
-  const [list, setList] = useState(listData);
+  const [list, setList] = useState([]);
   useImperativeHandle(ref, () => {
     return { list: list };
   });
