@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { Layout, Menu } from "antd";
+import { useRef, useState } from "react";
+import { Layout, Menu, Button } from "antd";
 import styles from "./style.module.scss";
 import AreaList from "./component/AreaList";
+import PageSetting from "./component/PageSetting";
 const { Header, Sider, Content } = Layout;
 
 const useCollapsed = () => {
@@ -17,6 +18,15 @@ const HomeManagement = () => {
   const handleHomePageRedirect = () => {
     window.location.href = "/";
   };
+
+  const handleSaveBtnClick = () => {
+    const listData = JSON.stringify(areaListRef.current.list);
+    window.localStorage.homeData = listData;
+    window.localStorage.title = pageSettingRef.current.title;
+    window.localStorage.description = pageSettingRef.current.description;
+  };
+  const pageSettingRef = useRef();
+  const areaListRef = useRef();
 
   return (
     <Layout>
@@ -48,7 +58,14 @@ const HomeManagement = () => {
           )}
         </Header>
         <Content className={styles.content}>
-          <AreaList />
+          <PageSetting ref={pageSettingRef} />
+          <AreaList ref={areaListRef} />
+
+          <div className={styles.save}>
+            <Button type="primary" onClick={handleSaveBtnClick}>
+              保存区块配置
+            </Button>
+          </div>
         </Content>
       </Layout>
     </Layout>

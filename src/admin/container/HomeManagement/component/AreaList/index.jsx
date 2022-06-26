@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import { Button } from "antd";
 
 import styles from "./arealist.module.scss";
 import { parseJsonByString } from "../../../../../utils";
 const listData = parseJsonByString(window.localStorage.homeData, []);
 
-const AreaList = () => {
+const AreaList = (props, ref) => {
   const [list, setList] = useState(listData);
+  useImperativeHandle(ref, () => {
+    return { list: list };
+  });
+
   const handleAddBtnClick = () => {
     const newList = [...list];
     newList.push({});
@@ -17,11 +21,6 @@ const AreaList = () => {
     const newList = [...list];
     newList.splice(index, 1);
     setList(newList);
-  };
-
-  const handleSaveBtnClick = () => {
-    const listData = JSON.stringify(list);
-    window.localStorage.homeData = listData;
   };
 
   return (
@@ -46,15 +45,8 @@ const AreaList = () => {
       <Button type="primary" ghost onClick={handleAddBtnClick}>
         新增页面区块
       </Button>
-      <Button
-        type="primary"
-        className={styles.save}
-        onClick={handleSaveBtnClick}
-      >
-        保存区块配置
-      </Button>
     </div>
   );
 };
 
-export default AreaList;
+export default forwardRef(AreaList);
