@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Button } from "antd";
 
 import styles from "./arealist.module.scss";
+import { parseJsonByString } from "../../../../../utils";
+const listData = parseJsonByString(window.localStorage.homeData, []);
 
 const AreaList = () => {
-  const [list, setList] = useState([]);
-
+  const [list, setList] = useState(listData);
   const handleAddBtnClick = () => {
     const newList = [...list];
     newList.push({});
@@ -18,7 +19,10 @@ const AreaList = () => {
     setList(newList);
   };
 
-  const handleSaveBtnClick = () => {};
+  const handleSaveBtnClick = () => {
+    const listData = JSON.stringify(list);
+    window.localStorage.homeData = listData;
+  };
 
   return (
     <div>
