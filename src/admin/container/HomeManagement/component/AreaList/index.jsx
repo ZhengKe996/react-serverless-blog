@@ -1,42 +1,59 @@
-import { useState, forwardRef, useImperativeHandle } from "react";
+import {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  createRef,
+  useMemo,
+} from "react";
 import { Button } from "antd";
 import styles from "./arealist.module.scss";
 import AreaItem from "../AreaItem";
+
+let refs = [];
+
 const AreaList = (props, ref) => {
-  const [list, setList] = useState(props.children);
+  const [children, setChildren] = useState(props.children);
+
+  useMemo(() => {
+    refs = children.map((item) => createRef());
+  }, [children]);
 
   useImperativeHandle(ref, () => {
-    return { children: list };
+    return {
+      getSchema: () => {
+        const schema = [];
+
+        children.forEach((item, index) => {
+          schema.push(refs[index].current.getSchema());
+        });
+
+        return schema;
+      },
+    };
   });
 
   const addItemChildrenClick = () => {
-    const newList = [...list];
-    newList.push({});
-    setList(newList);
+    const newChildren = [...children];
+    newChildren.push({});
+    setChildren(newChildren);
   };
 
   const removeItemFromChildrenClick = (index) => {
-    const newList = [...list];
-    newList.splice(index, 1);
-    setList(newList);
-  };
-
-  const changeChildrenItem = (index, child) => {
-    const newList = [...list];
-    newList.splice(index, 1, child);
-    setList(newList);
+    const newChildren = [...children];
+    newChildren.splice(index, 1);
+    setChildren(newChildren);
   };
 
   return (
     <div>
       <ul className={styles.list}>
-        {list.map((item, index) => (
+        {children.map((item, index) => (
           <AreaItem
             key={index}
             index={index}
             item={item}
+            ref={refs[index]}
             removeItemFromChildrenClick={removeItemFromChildrenClick}
-            changeChildrenItem={changeChildrenItem}
           />
         ))}
       </ul>
