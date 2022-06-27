@@ -3,8 +3,10 @@ import { Layout, Menu, Button } from "antd";
 import styles from "./style.module.scss";
 import AreaList from "./component/AreaList";
 import PageSetting from "./component/PageSetting";
-const { Header, Sider, Content } = Layout;
+import { parseJsonByString } from "../../../utils";
 
+const { Header, Sider, Content } = Layout;
+const schema = parseJsonByString(window.localStorage.schema, {});
 const useCollapsed = () => {
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = () => {
@@ -19,9 +21,17 @@ const HomeManagement = () => {
     window.location.href = "/";
   };
 
-  const handleSaveBtnClick = () => {};
-
   const areaListRef = useRef();
+
+  const handleSaveBtnClick = () => {
+    const { children } = areaListRef.current;
+    const schema = {
+      name: "Page",
+      attributes: {},
+      children: children,
+    };
+    window.localStorage.schema = JSON.stringify(schema);
+  };
 
   return (
     <Layout>
@@ -53,7 +63,7 @@ const HomeManagement = () => {
           )}
         </Header>
         <Content className={styles.content}>
-          <AreaList ref={areaListRef} />
+          <AreaList ref={areaListRef} children={schema?.children || []} />
 
           <div className={styles.save}>
             <Button type="primary" onClick={handleSaveBtnClick}>

@@ -1,12 +1,12 @@
 import { useState, forwardRef, useImperativeHandle } from "react";
 import { Button } from "antd";
-
 import styles from "./arealist.module.scss";
 
 const AreaList = (props, ref) => {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(props.children);
+
   useImperativeHandle(ref, () => {
-    return { list: list };
+    return { children: list };
   });
 
   const handleAddBtnClick = () => {
