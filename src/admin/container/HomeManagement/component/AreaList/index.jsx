@@ -22,12 +22,16 @@ const AreaList = (props, ref) => {
     return {
       getSchema: () => {
         const schema = [];
-
         children.forEach((item, index) => {
           schema.push(refs[index].current.getSchema());
         });
-
         return schema;
+      },
+      resetSchema: () => {
+        setChildren(props.children);
+        children.forEach((item, index) => {
+          refs[index].current.resetSchema();
+        });
       },
     };
   });
