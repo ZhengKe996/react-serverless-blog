@@ -29,7 +29,7 @@ const useStore = (index) => {
 const AreaItem = (props) => {
   const { index, id } = props;
   const { pageChild, changePageChild, removePageChild } = useStore(index);
-  const { setNodeRef, listeners, transform, transition } = useSortable({ id });
+  const { setNodeRef, listeners, transform } = useSortable({ id });
 
   const [isModelVisible, setIsModelVisible] = useState(false);
   const [temp, setTemp] = useState(pageChild);
@@ -97,7 +97,7 @@ const AreaItem = (props) => {
           onChange={handleSelectorChange}
         >
           <Option value="Banner">Banner 组件</Option>
-          <Option value="List">List 组件</Option>
+          <Option value="Notes">Notes 组件</Option>
           <Option value="Footer">Footer 组件</Option>
         </Select>
       </Modal>

@@ -1,5 +1,5 @@
 import styles from "./note.module.scss";
-const Notes = () => {
+const Notes = ({ schema }) => {
   return (
     <div className="wrapper">
       <ul className={styles.list}>
