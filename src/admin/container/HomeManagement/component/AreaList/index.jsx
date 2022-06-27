@@ -1,7 +1,7 @@
 import { useState, forwardRef, useImperativeHandle } from "react";
 import { Button } from "antd";
 import styles from "./arealist.module.scss";
-
+import AreaItem from "../AreaItem";
 const AreaList = (props, ref) => {
   const [list, setList] = useState(props.children);
 
@@ -9,15 +9,21 @@ const AreaList = (props, ref) => {
     return { children: list };
   });
 
-  const handleAddBtnClick = () => {
+  const addItemChildrenClick = () => {
     const newList = [...list];
     newList.push({});
     setList(newList);
   };
 
-  const handleDeleteBtnClick = (index) => {
+  const removeItemFromChildrenClick = (index) => {
     const newList = [...list];
     newList.splice(index, 1);
+    setList(newList);
+  };
+
+  const changeChildrenItem = (index, child) => {
+    const newList = [...list];
+    newList.splice(index, 1, child);
     setList(newList);
   };
 
@@ -25,22 +31,16 @@ const AreaList = (props, ref) => {
     <div>
       <ul className={styles.list}>
         {list.map((item, index) => (
-          <li key={index} className={styles.item}>
-            <span className={styles.content}>当前区块内容为空</span>
-            <span className={styles.delete}>
-              <Button
-                onClick={() => handleDeleteBtnClick(index)}
-                size="small"
-                type="dashed"
-                danger
-              >
-                删除
-              </Button>
-            </span>
-          </li>
+          <AreaItem
+            key={index}
+            index={index}
+            item={item}
+            removeItemFromChildrenClick={removeItemFromChildrenClick}
+            changeChildrenItem={changeChildrenItem}
+          />
         ))}
       </ul>
-      <Button type="primary" ghost onClick={handleAddBtnClick}>
+      <Button type="primary" ghost onClick={addItemChildrenClick}>
         新增页面区块
       </Button>
     </div>
