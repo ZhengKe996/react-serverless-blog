@@ -6,6 +6,7 @@ import {
   useMemo,
   useEffect,
 } from "react";
+import { ReactSortable } from "react-sortablejs";
 import { Button } from "antd";
 import styles from "./arealist.module.scss";
 import AreaItem from "../AreaItem";
@@ -49,15 +50,17 @@ const AreaList = (props, ref) => {
   return (
     <div>
       <ul className={styles.list}>
-        {children.map((item, index) => (
-          <AreaItem
-            key={index}
-            index={index}
-            item={item}
-            ref={refs[index]}
-            removeItemFromChildrenClick={removeItemFromChildrenClick}
-          />
-        ))}
+        <ReactSortable list={children} setList={setChildren}>
+          {children.map((item, index) => (
+            <AreaItem
+              key={index}
+              index={index}
+              item={item}
+              ref={refs[index]}
+              removeItemFromChildrenClick={removeItemFromChildrenClick}
+            />
+          ))}
+        </ReactSortable>
       </ul>
       <Button type="primary" ghost onClick={addItemChildrenClick}>
         新增页面区块
