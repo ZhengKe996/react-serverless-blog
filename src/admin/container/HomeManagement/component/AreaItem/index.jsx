@@ -1,25 +1,34 @@
-import { useState, forwardRef, useImperativeHandle, useEffect } from "react";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Button, Modal, Select } from "antd";
+import {
+  getChangePageChildrenAction,
+  getDeletePageChildrenAction,
+} from "../../store/action.js";
 import styles from "./areaitem.module.scss";
 
 const { Option } = Select;
 
-const AreaItem = (props, ref) => {
-  const { index, item, removeItemFromChildrenClick } = props;
+const useStore = (index) => {
+  const dispatch = useDispatch();
+  const pageChild = useSelector(
+    (state) => state.homeManagement.schema.children?.[index] || {}
+  );
+  const changePageChild = (temp) => {
+    dispatch(getChangePageChildrenAction(index, temp));
+  };
+  const removePageChild = () => {
+    dispatch(getDeletePageChildrenAction(index));
+  };
+  return { pageChild, changePageChild, removePageChild };
+};
+
+const AreaItem = (props) => {
+  const { index } = props;
+  const { pageChild, changePageChild, removePageChild } = useStore(index);
+
   const [isModelVisible, setIsModelVisible] = useState(false);
-  const [schema, setSchema] = useState(item);
-  const [temp, setTemp] = useState(item);
-
-  useEffect(() => {
-    setSchema(props.item);
-    setTemp(props.item);
-  }, [props.item]);
-
-  useImperativeHandle(ref, () => {
-    return {
-      getSchema: () => schema,
-    };
-  });
+  const [temp, setTemp] = useState(pageChild);
 
   const showModal = () => {
     setIsModelVisible(true);
@@ -27,30 +36,34 @@ const AreaItem = (props, ref) => {
 
   const handleModalOkClick = () => {
     setIsModelVisible(false);
-    setSchema(temp);
+    changePageChild(temp);
   };
 
   const handleModalCancelClick = () => {
     setIsModelVisible(false);
-    setTemp(schema);
+    setTemp(pageChild);
   };
 
   const handleSelectorChange = (value) => {
-    const newSchema = {
+    setTemp({
       name: value,
       attributes: {},
       children: [],
-    };
-    setTemp(newSchema);
+    });
   };
+
+  const removePageChildrenClick = () => {
+    removePageChild();
+  };
+
   return (
     <li className={styles.item}>
       <span className={styles.content} onClick={showModal}>
-        {schema.name ? `${schema.name} 组件` : "当前区块内容为空"}
+        {pageChild.name ? `${pageChild.name} 组件` : "当前区块内容为空"}
       </span>
       <span className={styles.delete}>
         <Button
-          onClick={() => removeItemFromChildrenClick(index)}
+          onClick={removePageChildrenClick}
           size="small"
           type="dashed"
           danger
@@ -79,4 +92,4 @@ const AreaItem = (props, ref) => {
   );
 };
 
-export default forwardRef(AreaItem);
+export default AreaItem;

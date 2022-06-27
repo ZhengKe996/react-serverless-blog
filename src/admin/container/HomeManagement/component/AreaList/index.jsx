@@ -1,72 +1,38 @@
-import {
-  useState,
-  forwardRef,
-  useImperativeHandle,
-  createRef,
-  useMemo,
-  useEffect,
-} from "react";
-import { ReactSortable } from "react-sortablejs";
 import { Button } from "antd";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./arealist.module.scss";
 import AreaItem from "../AreaItem";
+import { getAddPageChildrenAction } from "../../store/action";
 
-let refs = [];
-
-const AreaList = (props, ref) => {
-  const [children, setChildren] = useState(props.children);
-  useEffect(() => {
-    setChildren(props.children);
-  }, [props.children]);
-
-  useMemo(() => {
-    refs = children.map((item) => createRef());
-  }, [children]);
-
-  useImperativeHandle(ref, () => {
-    return {
-      getSchema: () => {
-        const schema = [];
-        children.forEach((item, index) => {
-          schema.push(refs[index].current.getSchema());
-        });
-        return schema;
-      },
-    };
-  });
-
-  const addItemChildrenClick = () => {
-    const newChildren = [...children];
-    newChildren.push({});
-    setChildren(newChildren);
+const useStore = () => {
+  const dispatch = useDispatch();
+  const children =
+    useSelector((state) => state.homeManagement.schema?.children) || [];
+  const changeSchema = () => {
+    dispatch(getAddPageChildrenAction());
   };
 
-  const removeItemFromChildrenClick = (index) => {
-    const newChildren = [...children];
-    newChildren.splice(index, 1);
-    setChildren(newChildren);
+  return { children, changeSchema };
+};
+
+const AreaList = () => {
+  const { children, changeSchema } = useStore();
+  const addPageChildrenClick = () => {
+    changeSchema();
   };
 
   return (
     <div>
       <ul className={styles.list}>
-        <ReactSortable list={children} setList={setChildren}>
-          {children.map((item, index) => (
-            <AreaItem
-              key={index}
-              index={index}
-              item={item}
-              ref={refs[index]}
-              removeItemFromChildrenClick={removeItemFromChildrenClick}
-            />
-          ))}
-        </ReactSortable>
+        {children.map((item, index) => (
+          <AreaItem key={index} index={index} item={item} />
+        ))}
       </ul>
-      <Button type="primary" ghost onClick={addItemChildrenClick}>
+      <Button type="primary" ghost onClick={addPageChildrenClick}>
         新增页面区块
       </Button>
     </div>
   );
 };
 
-export default forwardRef(AreaList);
+export default AreaList;
