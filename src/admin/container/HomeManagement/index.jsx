@@ -6,7 +6,7 @@ import PageSetting from "./component/PageSetting";
 import { parseJsonByString } from "../../../utils";
 
 const { Header, Sider, Content } = Layout;
-const schema = parseJsonByString(window.localStorage.schema, {});
+const initialSchema = parseJsonByString(window.localStorage.schema, {});
 const useCollapsed = () => {
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = () => {
@@ -17,6 +17,7 @@ const useCollapsed = () => {
 
 const HomeManagement = () => {
   const { collapsed, toggleCollapsed } = useCollapsed();
+  const [schema, setSchema] = useState(initialSchema);
   const handleHomePageRedirect = () => {
     window.location.href = "/";
   };
@@ -30,13 +31,13 @@ const HomeManagement = () => {
       attributes: {},
       children: getSchema(),
     };
-    console.log(schema);
+
     window.localStorage.schema = JSON.stringify(schema);
   };
 
   const handleResetBtnClick = () => {
-    const { resetSchema } = areaListRef.current;
-    resetSchema();
+    const newSchema = parseJsonByString(window.localStorage.schema, {});
+    setSchema(newSchema);
   };
 
   return (

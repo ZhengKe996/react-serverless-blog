@@ -4,6 +4,7 @@ import {
   useImperativeHandle,
   createRef,
   useMemo,
+  useEffect,
 } from "react";
 import { Button } from "antd";
 import styles from "./arealist.module.scss";
@@ -13,6 +14,9 @@ let refs = [];
 
 const AreaList = (props, ref) => {
   const [children, setChildren] = useState(props.children);
+  useEffect(() => {
+    setChildren(props.children);
+  }, [props.children]);
 
   useMemo(() => {
     refs = children.map((item) => createRef());
@@ -26,12 +30,6 @@ const AreaList = (props, ref) => {
           schema.push(refs[index].current.getSchema());
         });
         return schema;
-      },
-      resetSchema: () => {
-        setChildren(props.children);
-        children.forEach((item, index) => {
-          refs[index].current.resetSchema();
-        });
       },
     };
   });

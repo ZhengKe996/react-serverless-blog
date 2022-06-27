@@ -1,22 +1,23 @@
-import { useState, forwardRef, useImperativeHandle } from "react";
+import { useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import { Button, Modal, Select } from "antd";
 import styles from "./areaitem.module.scss";
 
 const { Option } = Select;
-let prevSchema = {};
 
 const AreaItem = (props, ref) => {
   const { index, item, removeItemFromChildrenClick } = props;
   const [isModelVisible, setIsModelVisible] = useState(false);
   const [schema, setSchema] = useState(item);
+  const [temp, setTemp] = useState(item);
+
+  useEffect(() => {
+    setSchema(props.item);
+    setTemp(props.item);
+  }, [props.item]);
 
   useImperativeHandle(ref, () => {
     return {
       getSchema: () => schema,
-      resetSchema: () => {
-        setSchema(item);
-        prevSchema = {};
-      },
     };
   });
 
@@ -26,24 +27,21 @@ const AreaItem = (props, ref) => {
 
   const handleModalOkClick = () => {
     setIsModelVisible(false);
-    prevSchema = {};
+    setSchema(temp);
   };
 
   const handleModalCancelClick = () => {
-    setSchema(prevSchema);
     setIsModelVisible(false);
-    prevSchema = {};
+    setTemp(schema);
   };
 
   const handleSelectorChange = (value) => {
-    prevSchema = { ...schema };
-
     const newSchema = {
       name: value,
       attributes: {},
       children: [],
     };
-    setSchema(newSchema);
+    setTemp(newSchema);
   };
   return (
     <li className={styles.item}>
@@ -67,7 +65,7 @@ const AreaItem = (props, ref) => {
         onCancel={handleModalCancelClick}
       >
         <Select
-          value={schema.name}
+          value={temp.name}
           className={styles.selector}
           style={{ width: "100%" }}
           onChange={handleSelectorChange}
