@@ -1,16 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-
 import { Button, Modal, Select } from "antd";
 import {
   getChangePageChildrenAction,
   getDeletePageChildrenAction,
 } from "../../store/action.js";
+import { cloneDeep } from "lodash";
 import styles from "./areaitem.module.scss";
 
+import Banner from "./component/Banner.jsx";
+import Notes from "./component/Notes.jsx";
+import Footer from "./component/Footer.jsx";
+
 const { Option } = Select;
+const map = { Banner, Notes, Footer };
 
 const useStore = (index) => {
   const dispatch = useDispatch();
@@ -34,12 +39,15 @@ const AreaItem = (props) => {
   const [isModelVisible, setIsModelVisible] = useState(false);
   const [temp, setTemp] = useState(pageChild);
 
+  useEffect(() => {
+    setTemp(pageChild);
+  }, [pageChild]);
+
   const style = {
     transform: CSS.Transform.toString(transform),
   };
 
   const showModal = () => {
-    console.log("---");
     setIsModelVisible(true);
   };
 
@@ -61,10 +69,28 @@ const AreaItem = (props) => {
     });
   };
 
+  const changeTempPageChildrenAttributes = (kvObj) => {
+    const newTemp = cloneDeep(temp);
+    for (let key in kvObj) {
+      newTemp.attributes[key] = kvObj[key];
+    }
+    setTemp(newTemp);
+  };
+
   const removePageChildrenClick = () => {
     removePageChild();
   };
 
+  const getComponent = () => {
+    const { name } = temp;
+    const Component = name ? map[name] : null;
+    return Component ? (
+      <Component
+        {...temp}
+        changeAttributes={changeTempPageChildrenAttributes}
+      />
+    ) : null;
+  };
   return (
     <li className={styles.item} style={style}>
       <span className={styles.content} onClick={showModal}>
@@ -100,6 +126,7 @@ const AreaItem = (props) => {
           <Option value="Notes">Notes 组件</Option>
           <Option value="Footer">Footer 组件</Option>
         </Select>
+        {getComponent()}
       </Modal>
     </li>
   );

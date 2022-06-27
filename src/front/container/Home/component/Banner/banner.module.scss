@@ -1,40 +1,48 @@
 .banner {
   position: relative;
-
-  height: 530px;
-
-  background-image: url("https://react-serverless-blog.oss-cn-hangzhou.aliyuncs.com/images/bg.jpeg");
   background-repeat: no-repeat;
   background-size: contain;
+  padding-bottom: 150px;
   .info {
-    position: absolute;
+    display: flex;
     height: 150px;
+    position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
+    background: #f5f5f5;
     .avatar {
-      position: absolute;
+      position: relative;
       top: -70px;
-      left: 40px;
+      margin-left: 40px;
       width: 200px;
       height: 200px;
-      background-size: contain;
-
       border-radius: 20px;
     }
-    .title {
-      line-height: 50px;
-      margin-left: 280px;
-      font-size: 28px;
-      margin-top: 10px;
-      color: #333;
-    }
-    .description {
-      line-height: 32px;
-      margin-left: 280px;
-      margin-right: 30px;
-      font-size: 18px;
-      color: #030303;
+    .content {
+      flex: 1;
+      .title {
+        line-height: 50px;
+        margin-left: 30px;
+        font-size: 28px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        margin-top: 10px;
+        color: #333;
+      }
+      .description {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+        height: 64px;
+        line-height: 32px;
+        margin-left: 30px;
+        margin-right: 30px;
+        font-size: 18px;
+        color: #030303;
+      }
     }
   }
 }
