@@ -1,9 +1,10 @@
-import { produce } from "immer";
+import { produce, original } from "immer";
 import {
   CHANGE_SCHEMA,
   ADD_PAGE_CHILDREN,
   CHANGE_PAGE_CHILDREN,
   DELETE_PAGE_CHILDREN,
+  CHANGE_PAGE_CHILDREN_POSITION,
 } from "./constant";
 import { parseJsonByString } from "../../../../utils";
 
@@ -31,6 +32,11 @@ const reducer = (state = defaultState, action) =>
         break;
       case DELETE_PAGE_CHILDREN:
         draft.schema.children.splice(action.index, 1);
+        break;
+      case CHANGE_PAGE_CHILDREN_POSITION:
+        const copy = original(draft.schema.children);
+        draft.schema.children.splice(action.oldIndex, 1);
+        draft.schema.children.splice(action.newIndex, 0, copy[action.oldIndex]);
         break;
       default:
         break;

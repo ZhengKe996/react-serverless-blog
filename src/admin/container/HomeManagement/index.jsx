@@ -52,22 +52,28 @@ const HomeManagement = () => {
       >
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["admin-home"]}>
           <Menu.Item key="admin-home">
-            <span className="iconfont">&#xe64d;</span>首页内容管理
+            <span className="iconfont">&#xe739;</span>&nbsp;首页内容管理
           </Menu.Item>
           <Menu.Item key="admin-back" onClick={handleHomePageRedirect}>
-            <span className="iconfont">&#xe601;</span>返回用户页面
+            <span className="iconfont">&#xe6bd;</span>&nbsp;返回用户页面
           </Menu.Item>
         </Menu>
       </Sider>
       <Layout>
         <Header className={styles.header}>
           {collapsed ? (
-            <span className="iconfont" onClick={toggleCollapsed}>
-              &#xe62c;
+            <span
+              className={`iconfont ${styles.icon}`}
+              onClick={toggleCollapsed}
+            >
+              &#xe680;
             </span>
           ) : (
-            <span className="iconfont" onClick={toggleCollapsed}>
-              &#xe629;
+            <span
+              className={`iconfont ${styles.icon}`}
+              onClick={toggleCollapsed}
+            >
+              &#xe67f;
             </span>
           )}
         </Header>

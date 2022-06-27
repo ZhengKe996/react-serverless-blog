@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+
 import { Button, Modal, Select } from "antd";
 import {
   getChangePageChildrenAction,
@@ -24,13 +27,19 @@ const useStore = (index) => {
 };
 
 const AreaItem = (props) => {
-  const { index } = props;
+  const { index, id } = props;
   const { pageChild, changePageChild, removePageChild } = useStore(index);
+  const { setNodeRef, listeners, transform, transition } = useSortable({ id });
 
   const [isModelVisible, setIsModelVisible] = useState(false);
   const [temp, setTemp] = useState(pageChild);
 
+  const style = {
+    transform: CSS.Transform.toString(transform),
+  };
+
   const showModal = () => {
+    console.log("---");
     setIsModelVisible(true);
   };
 
@@ -57,7 +66,7 @@ const AreaItem = (props) => {
   };
 
   return (
-    <li className={styles.item}>
+    <li className={styles.item} style={style}>
       <span className={styles.content} onClick={showModal}>
         {pageChild.name ? `${pageChild.name} 组件` : "当前区块内容为空"}
       </span>
@@ -70,6 +79,10 @@ const AreaItem = (props) => {
         >
           删除
         </Button>
+      </span>
+
+      <span className="iconfont" ref={setNodeRef} {...listeners}>
+        &#xe62d;
       </span>
       <Modal
         title="选择组件"

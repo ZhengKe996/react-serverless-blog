@@ -1,7 +1,9 @@
 .sidebar {
   padding: 10px 0;
+  line-height: 40px;
+  font-size: 24px;
   :global(.iconfont) {
-    margin-right: 10px;
+    margin-right: 25px;
   }
 }
 
@@ -11,11 +13,13 @@
     color: #f5f5f5;
     cursor: pointer;
   }
+  .icon {
+    font-size: 32px !important;
+  }
 }
 
 .content {
   padding: 20px;
-
   min-height: 100vh !important;
 }
 
