@@ -7,11 +7,16 @@
   .item {
     width: 20%;
     margin-top: 10px;
+    .link {
+      color: #333;
+      text-decoration: none;
+    }
     .img {
       width: 240px;
-      height: 180px;
+      height: 135px;
       display: block;
       margin: 0 auto;
+      border-radius: 10px;
     }
     .title {
       margin: 0;
@@ -30,7 +35,6 @@
       padding: 0 10px;
       font-size: 14px;
       font-weight: normal;
-      color: #777;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;

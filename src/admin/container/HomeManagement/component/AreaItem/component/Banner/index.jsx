@@ -1,6 +1,6 @@
 import { Input, Switch } from "antd";
 import styles from "./style.module.scss";
-
+import commonStyles from "../style.module.scss";
 const { TextArea } = Input;
 
 const Banner = (props) => {
@@ -22,7 +22,7 @@ const Banner = (props) => {
   };
 
   return (
-    <>
+    <div className={commonStyles.wrapper}>
       <div className={styles.row}>
         <span className={styles.label}>页面标题</span>
         <Input
@@ -99,7 +99,7 @@ const Banner = (props) => {
           }}
         />
       </div>
-    </>
+    </div>
   );
 };
 

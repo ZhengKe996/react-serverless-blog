@@ -10,9 +10,9 @@ import {
 import { cloneDeep } from "lodash";
 import styles from "./areaitem.module.scss";
 
-import Banner from "./component/Banner.jsx";
-import Notes from "./component/Notes.jsx";
-import Footer from "./component/Footer.jsx";
+import Banner from "./component/Banner";
+import Notes from "./component/Notes";
+import Footer from "./component/Footer";
 
 const { Option } = Select;
 const map = { Banner, Notes, Footer };
@@ -37,10 +37,10 @@ const AreaItem = (props) => {
   const { setNodeRef, listeners, transform } = useSortable({ id });
 
   const [isModelVisible, setIsModelVisible] = useState(false);
-  const [temp, setTemp] = useState(pageChild);
+  const [temp, setTemp] = useState(cloneDeep(pageChild));
 
   useEffect(() => {
-    setTemp(pageChild);
+    setTemp(cloneDeep(pageChild));
   }, [pageChild]);
 
   const style = {
@@ -58,7 +58,7 @@ const AreaItem = (props) => {
 
   const handleModalCancelClick = () => {
     setIsModelVisible(false);
-    setTemp(pageChild);
+    setTemp(cloneDeep(pageChild));
   };
 
   const handleSelectorChange = (value) => {
@@ -70,10 +70,16 @@ const AreaItem = (props) => {
   };
 
   const changeTempPageChildrenAttributes = (kvObj) => {
-    const newTemp = cloneDeep(temp);
+    const newTemp = { ...temp };
     for (let key in kvObj) {
       newTemp.attributes[key] = kvObj[key];
     }
+    setTemp(newTemp);
+  };
+
+  const changeTempPageChildren = (children) => {
+    const newTemp = { ...temp };
+    newTemp.children = children;
     setTemp(newTemp);
   };
 
@@ -88,6 +94,7 @@ const AreaItem = (props) => {
       <Component
         {...temp}
         changeAttributes={changeTempPageChildrenAttributes}
+        changeChildren={changeTempPageChildren}
       />
     ) : null;
   };
@@ -115,6 +122,7 @@ const AreaItem = (props) => {
         visible={isModelVisible}
         onOk={handleModalOkClick}
         onCancel={handleModalCancelClick}
+        bodyStyle={{ maxHeight: 550, overflowY: "scroll" }}
       >
         <Select
           value={temp.name}
