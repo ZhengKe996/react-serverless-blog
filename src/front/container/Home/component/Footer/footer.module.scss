@@ -1,13 +1,24 @@
 .footer {
-  height: 60px;
+  background: #f5f5f5;
+  padding: 10px;
   .list {
     list-style-type: none;
+    margin: 0;
+    padding: 10px 0;
     .item {
-      line-height: 60px;
+      line-height: 28px;
+      font-size: 14px;
+
       .link {
-        color: #333;
+        color: #545c63;
         text-decoration: none;
       }
     }
+  }
+  .copyright {
+    line-height: 24px;
+    font-size: 12px;
+    color: #93999f;
+    margin-left: 10px;
   }
 }

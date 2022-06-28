@@ -1,6 +1,6 @@
 import styles from "./note.module.scss";
 const Notes = ({ schema }) => {
-  const { children = {} } = schema;
+  const { children = [] } = schema;
   return (
     <div className="wrapper">
       <ul className={styles.list}>
@@ -9,7 +9,12 @@ const Notes = ({ schema }) => {
           const { link, title, description, imageUrl } = attributes;
           return (
             <li className={styles.item} key={index}>
-              <a className={styles.link} href={link}>
+              <a
+                className={styles.link}
+                href={link}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <img className={styles.img} src={imageUrl} alt={title} />
                 <h4 className={styles.title}>{title || "Title is Null"}</h4>
                 <p className={styles.desc}>

@@ -1,5 +1,5 @@
 import { Button, Input } from "antd";
-import styles from "./style.module.scss";
+
 import commonStyles from "../style.module.scss";
 
 const Notes = (props) => {
@@ -34,61 +34,61 @@ const Notes = (props) => {
     changeChildren(newChildren);
   };
   return (
-    <div className={commonStyles.wrapper}>
+    <div className={commonStyles["wrapper"]}>
       <Button
         type="primary"
-        className={styles.button}
+        className={commonStyles["button"]}
         onClick={addItemToChildren}
       >
         新增列表项
       </Button>
       {children.map(
         ({ attributes: { title, description, imageUrl, link } }, index) => (
-          <div className={styles.area} key={index}>
+          <div className={commonStyles["area"]} key={index}>
             <div
-              className={styles.delete}
+              className={commonStyles["area-delete"]}
               onClick={() => deleteItemFormChildren(index)}
             >
               X
             </div>
-            <div className={styles.row}>
-              <span className={styles.label}>标题</span>
+            <div className={commonStyles["area-row"]}>
+              <span className={commonStyles["area-label"]}>标题</span>
               <Input
                 value={title}
-                className={styles.content}
+                className={commonStyles["area-content"]}
                 placeholder="请输入标题"
                 onChange={(e) => {
                   changeChildrenItem(index, "title", e.target.value);
                 }}
               />
             </div>
-            <div className={styles.row}>
-              <span className={styles.label}>描述</span>
+            <div className={commonStyles["area-row"]}>
+              <span className={commonStyles["area-label"]}>描述</span>
               <Input
                 value={description}
-                className={styles.content}
+                className={commonStyles["area-content"]}
                 placeholder="请输入描述"
                 onChange={(e) => {
                   changeChildrenItem(index, "description", e.target.value);
                 }}
               />
             </div>
-            <div className={styles.row}>
-              <span className={styles.label}>图片</span>
+            <div className={commonStyles["area-row"]}>
+              <span className={commonStyles["area-label"]}>图片</span>
               <Input
                 value={imageUrl}
-                className={styles.content}
+                className={commonStyles["area-content"]}
                 placeholder="请输入图片的 URL"
                 onChange={(e) => {
                   changeChildrenItem(index, "imageUrl", e.target.value);
                 }}
               />
             </div>
-            <div className={styles.row}>
-              <span className={styles.label}>链接</span>
+            <div className={commonStyles["area-row"]}>
+              <span className={commonStyles["area-label"]}>链接</span>
               <Input
                 value={link}
-                className={styles.content}
+                className={commonStyles["area-content"]}
                 placeholder="请输入跳转链接"
                 onChange={(e) => {
                   changeChildrenItem(index, "link", e.target.value);

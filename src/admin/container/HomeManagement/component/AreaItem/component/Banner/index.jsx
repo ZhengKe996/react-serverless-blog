@@ -1,5 +1,4 @@
 import { Input, Switch } from "antd";
-import styles from "./style.module.scss";
 import commonStyles from "../style.module.scss";
 const { TextArea } = Input;
 
@@ -22,12 +21,12 @@ const Banner = (props) => {
   };
 
   return (
-    <div className={commonStyles.wrapper}>
-      <div className={styles.row}>
-        <span className={styles.label}>页面标题</span>
+    <div className={commonStyles["wrapper"]}>
+      <div className={commonStyles["attributes-row"]}>
+        <span className={commonStyles["attributes-label"]}>页面标题</span>
         <Input
           value={title}
-          className={styles.content}
+          className={commonStyles["attributes-content"]}
           placeholder="请输入页面标题"
           onChange={(e) => {
             changeAttributes({ title: e.target.value });
@@ -35,11 +34,11 @@ const Banner = (props) => {
         />
       </div>
 
-      <div className={styles.row}>
-        <span className={styles.label}>页面描述</span>
+      <div className={commonStyles["attributes-row"]}>
+        <span className={commonStyles["attributes-label"]}>页面描述</span>
         <TextArea
           value={description}
-          className={styles.content}
+          className={commonStyles["attributes-content"]}
           rows={2}
           placeholder="请输入页面描述"
           onChange={(e) => {
@@ -48,8 +47,8 @@ const Banner = (props) => {
         />
       </div>
 
-      <div className={styles.row}>
-        <span className={styles.label}>展示小图</span>
+      <div className={commonStyles["attributes-row"]}>
+        <span className={commonStyles["attributes-label"]}>展示小图</span>
         <Switch
           checked={showSmallPic}
           onChange={(checked) => {
@@ -59,11 +58,11 @@ const Banner = (props) => {
       </div>
 
       {showSmallPic ? (
-        <div className={styles.row}>
-          <span className={styles.label}>小图链接</span>
+        <div className={commonStyles["attributes-row"]}>
+          <span className={commonStyles["attributes-label"]}>小图链接</span>
           <Input
             value={smallPicUrl}
-            className={styles.content}
+            className={commonStyles["attributes-content"]}
             rows={2}
             placeholder="请输入小图的 URL 地址"
             onChange={(e) => {
@@ -73,11 +72,11 @@ const Banner = (props) => {
         </div>
       ) : null}
 
-      <div className={styles.row}>
-        <span className={styles.label}>背景链接</span>
+      <div className={commonStyles["attributes-row"]}>
+        <span className={commonStyles["attributes-label"]}>背景链接</span>
         <Input
           value={backgroundUrl}
-          className={styles.content}
+          className={commonStyles["attributes-content"]}
           rows={2}
           placeholder="请输入背景的 URL 地址"
           onChange={(e) => {
@@ -86,12 +85,12 @@ const Banner = (props) => {
         />
       </div>
 
-      <div className={styles.row}>
-        <span className={styles.label}>背景高度</span>
+      <div className={commonStyles["attributes-row"]}>
+        <span className={commonStyles["attributes-label"]}>背景高度</span>
         <Input
           type="number"
           value={backgroundHeight}
-          className={styles.content}
+          className={commonStyles["attributes-content"]}
           rows={2}
           placeholder="请输入背景高度的像素值"
           onChange={(e) => {
