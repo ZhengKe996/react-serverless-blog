@@ -7,7 +7,7 @@
 
 // const useStore = () => {
 //   const dispatch = useDispatch();
-//   const schema = useSelector((state) => state.homeManagement.schema);
+//   const schema = useSelector((state) => state.common.schema);
 //   const changeSchema = (schema) => {
 //     dispatch(getChangeSchemaAction(schema));
 //   };

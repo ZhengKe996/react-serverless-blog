@@ -1,8 +1,8 @@
 import { legacy_createStore as createStore, combineReducers } from "redux";
-import homeManagementReducer from "../admin/container/HomeManagement/store/reducer";
+import commonReducer from "../admin/store/reducer";
 
 const reducer = combineReducers({
-  homeManagement: homeManagementReducer,
+  common: commonReducer,
 });
 
 const store = createStore(

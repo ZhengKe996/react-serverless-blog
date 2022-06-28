@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from "./style.module.scss";
 import AreaList from "./component/AreaList";
 import { parseJsonByString } from "../../../utils";
-import { getChangeSchemaAction } from "./store/action";
+import { getChangeSchemaAction } from "../../store/action.js";
 
 const useStore = () => {
   const dispatch = useDispatch();
-  const schema = useSelector((state) => state.homeManagement.schema);
+  const schema = useSelector((state) => state.common.schema);
   const changeSchema = (schema) => {
     dispatch(getChangeSchemaAction(schema));
   };

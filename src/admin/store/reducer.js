@@ -6,7 +6,7 @@ import {
   DELETE_PAGE_CHILDREN,
   CHANGE_PAGE_CHILDREN_POSITION,
 } from "./constant";
-import { parseJsonByString } from "../../../../utils";
+import { parseJsonByString } from "../../utils";
 
 const initialSchema = parseJsonByString(window.localStorage.schema, {
   name: "Page",

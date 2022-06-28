@@ -6,7 +6,7 @@ import { Button, Modal, Select } from "antd";
 import {
   getChangePageChildrenAction,
   getDeletePageChildrenAction,
-} from "../../store/action.js";
+} from "../../../../store/action.js";
 import { cloneDeep } from "lodash";
 import styles from "./areaitem.module.scss";
 
@@ -20,7 +20,7 @@ const map = { Banner, Notes, Footer };
 const useStore = (index) => {
   const dispatch = useDispatch();
   const pageChild = useSelector(
-    (state) => state.homeManagement.schema.children?.[index] || {}
+    (state) => state.common.schema.children?.[index] || {}
   );
   const changePageChild = (temp) => {
     dispatch(getChangePageChildrenAction(index, temp));

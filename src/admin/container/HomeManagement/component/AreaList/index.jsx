@@ -8,12 +8,11 @@ import AreaItem from "../AreaItem";
 import {
   getAddPageChildrenAction,
   getChangePageChildrenPositionAction,
-} from "../../store/action";
+} from "../../../../store/action.js";
 
 const useStore = () => {
   const dispatch = useDispatch();
-  const children =
-    useSelector((state) => state.homeManagement.schema?.children) || [];
+  const children = useSelector((state) => state.common.schema?.children) || [];
   const changeSchema = () => {
     dispatch(getAddPageChildrenAction());
   };
