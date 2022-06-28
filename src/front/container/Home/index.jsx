@@ -1,10 +1,10 @@
+import { Helmet } from "react-helmet";
 import { parseJsonByString } from "../../../utils";
 import Banner from "./component/Banner";
 import Footer from "./component/Footer";
 import Notes from "./component/Notes";
 const pageSchema = parseJsonByString(window.localStorage.schema, {});
-const children = pageSchema.children || [];
-
+const { children = [], attributes = {} } = pageSchema;
 const map = {
   Banner,
   Footer,
@@ -16,6 +16,13 @@ const render = (item, index) => {
 };
 
 const Home = () => {
-  return <div>{children.map((item, index) => render(item, index))}</div>;
+  return (
+    <div>
+      <Helmet>
+        <title>{attributes?.title || "Hello"}</title>
+      </Helmet>
+      {children.map((item, index) => render(item, index))}
+    </div>
+  );
 };
 export default Home;

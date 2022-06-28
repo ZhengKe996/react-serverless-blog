@@ -4,6 +4,7 @@ import {
   CHANGE_PAGE_CHILDREN,
   DELETE_PAGE_CHILDREN,
   CHANGE_PAGE_CHILDREN_POSITION,
+  CHANGE_PAGE_ATTRIBUTE,
 } from "./constant";
 
 export const getChangeSchemaAction = (schema) => {
@@ -36,4 +37,12 @@ export const getDeletePageChildrenAction = (index) => {
 
 export const getChangePageChildrenPositionAction = (oldIndex, newIndex) => {
   return { type: CHANGE_PAGE_CHILDREN_POSITION, oldIndex, newIndex };
+};
+
+export const getChangePageAttributeAction = (key, value) => {
+  return {
+    type: CHANGE_PAGE_ATTRIBUTE,
+    key: key,
+    value: value,
+  };
 };

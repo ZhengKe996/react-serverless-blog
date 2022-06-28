@@ -5,6 +5,7 @@ import {
   CHANGE_PAGE_CHILDREN,
   DELETE_PAGE_CHILDREN,
   CHANGE_PAGE_CHILDREN_POSITION,
+  CHANGE_PAGE_ATTRIBUTE,
 } from "./constant";
 import { parseJsonByString } from "../../utils";
 
@@ -37,6 +38,9 @@ const reducer = (state = defaultState, action) =>
         const copy = original(draft.schema.children);
         draft.schema.children.splice(action.oldIndex, 1);
         draft.schema.children.splice(action.newIndex, 0, copy[action.oldIndex]);
+        break;
+      case CHANGE_PAGE_ATTRIBUTE:
+        draft.schema.attributes[action.key] = action.value;
         break;
       default:
         break;
