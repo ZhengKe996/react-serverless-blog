@@ -20,10 +20,15 @@ const HomeManagement = () => {
   const { changeSchema, schema } = useStore();
 
   const handleSaveBtnClick = () => {
+    const token = window.localStorage._authing_token;
     axios
-      .post("/api/schema/save", {
-        schema: JSON.stringify(schema),
-      })
+      .post(
+        "/api/schema/save",
+        {
+          schema: JSON.stringify(schema),
+        },
+        { headers: { token } }
+      )
       .then((res) => {
         const { success = false } = res.data;
         (success && message.success("保存区块配置成功")) ||
