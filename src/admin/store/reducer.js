@@ -7,13 +7,12 @@ import {
   CHANGE_PAGE_CHILDREN_POSITION,
   CHANGE_PAGE_ATTRIBUTE,
 } from "./constant";
-import { parseJsonByString } from "../../utils";
 
-const initialSchema = parseJsonByString(window.localStorage.schema, {
+const initialSchema = {
   name: "Page",
   attributes: {},
   children: [],
-});
+};
 
 const defaultState = {
   schema: initialSchema,

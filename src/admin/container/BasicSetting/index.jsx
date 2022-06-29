@@ -1,5 +1,6 @@
 import { useCallback } from "react";
-import { Button, Input } from "antd";
+import axios from "axios";
+import { Button, Input, message } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./style.module.scss";
 
@@ -26,11 +27,24 @@ const BasicSetting = () => {
   const { attributes = {} } = schema;
   const { title = "" } = attributes;
   const handleSaveBtnClick = () => {
-    window.localStorage.schema = JSON.stringify(schema);
+    axios
+      .post("/api/schema/save", {
+        schema: JSON.stringify(schema),
+      })
+      .then((res) => {
+        const { success = false } = res.data;
+        (success && message.success("保存基础配置成功")) ||
+          message.error("保存基础配置失败, 请稍后再试");
+      });
   };
 
   const handleResetBtnClick = () => {
-    changeSchema(parseJsonByString(window.localStorage.schema, {}));
+    axios.get("/api/schema/getLatestOne").then((res) => {
+      const { data = null, success = false } = res.data;
+      data && changeSchema(parseJsonByString(data.schema, {}));
+      (success && message.success("重置基础配置成功")) ||
+        message.error("重置基础配置失败, 请稍后再试");
+    });
   };
 
   const handleTitleChange = useCallback(
