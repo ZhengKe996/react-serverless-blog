@@ -7,6 +7,7 @@ import { Layout, Menu, message } from "antd";
 import store from "../store";
 import HomeManagement from "./container/HomeManagement";
 import BasicSetting from "./container/BasicSetting";
+import Login from "./container/Login";
 import { getChangeSchemaAction } from "./store/action";
 import { parseJsonByString } from "../utils";
 import styles from "./style.module.scss";
@@ -37,7 +38,7 @@ const useStore = () => {
 const Wrapper = () => {
   const { changeSchema } = useStore();
   const { collapsed, toggleCollapsed } = useCollapsed();
-
+  const token = window.localStorage._authing_token;
   useEffect(() => {
     axios.get("/api/schema/getLatestOne").then((res) => {
       const { data = null, success = false } = res.data;
@@ -50,7 +51,7 @@ const Wrapper = () => {
   const handleHomePageRedirect = () => {
     window.location.href = "/";
   };
-  return (
+  return token ? (
     <Router>
       <Layout>
         <Sider
@@ -102,6 +103,8 @@ const Wrapper = () => {
         </Layout>
       </Layout>
     </Router>
+  ) : (
+    <Login style={{ width: "100vw" }} />
   );
 };
 
