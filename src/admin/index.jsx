@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import axios from "axios";
 import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { Layout, Menu, message } from "antd";
 import store from "../store";
 import HomeManagement from "./container/HomeManagement";
 import BasicSetting from "./container/BasicSetting";
 import Login from "./container/Login";
-import { getChangeSchemaAction } from "./store/action";
+import useSchemaData from "../hooks/useSchemaData";
 import { parseJsonByString } from "../utils";
+import service from "../service";
 import styles from "./style.module.scss";
 
 import "normalize.css";
@@ -26,27 +26,18 @@ const useCollapsed = () => {
   return { collapsed, toggleCollapsed };
 };
 
-const useStore = () => {
-  const dispatch = useDispatch();
-  const changeSchema = (schema) => {
-    dispatch(getChangeSchemaAction(schema));
-  };
-
-  return { changeSchema };
-};
-
 const Wrapper = () => {
-  const { changeSchema } = useStore();
+  const { changeSchema } = useSchemaData();
   const { collapsed, toggleCollapsed } = useCollapsed();
   const token = window.localStorage._authing_token;
   useEffect(() => {
-    axios.get("/api/schema/getLatestOne").then((res) => {
-      const { data = null, success = false } = res.data;
+    service.get("/api/schema/getLatestOne").then((res) => {
+      const { data = null, success = false } = res;
       data && changeSchema(parseJsonByString(data.schema, {}));
       (success && message.success("获取配置成功")) ||
         message.error("获取配置失败, 请稍后再试");
     });
-  }, [changeSchema]);
+  }, []);
 
   const handleHomePageRedirect = () => {
     window.location.href = "/";

@@ -1,26 +1,9 @@
 import { DndContext } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
-
+import useSchemaData from "../../../../../hooks/useSchemaData";
 import { Button } from "antd";
-import { useSelector, useDispatch } from "react-redux";
 import styles from "./arealist.module.scss";
 import AreaItem from "../AreaItem";
-import {
-  getAddPageChildrenAction,
-  getChangePageChildrenPositionAction,
-} from "../../../../store/action.js";
-
-const useStore = () => {
-  const dispatch = useDispatch();
-  const children = useSelector((state) => state.common.schema?.children) || [];
-  const changeSchema = () => {
-    dispatch(getAddPageChildrenAction());
-  };
-  const onSortEnd = (activeIndex, overIndex) => {
-    dispatch(getChangePageChildrenPositionAction(activeIndex, overIndex));
-  };
-  return { children, changeSchema, onSortEnd };
-};
 
 const SortableList = (props) => {
   const { children, onSortEnd } = props;
@@ -45,9 +28,9 @@ const SortableList = (props) => {
 };
 
 const AreaList = () => {
-  const { children, changeSchema, onSortEnd } = useStore();
+  const { children, changeChildrenSchema, onSortEnd } = useSchemaData();
   const addPageChildrenClick = () => {
-    changeSchema();
+    changeChildrenSchema();
   };
 
   return (

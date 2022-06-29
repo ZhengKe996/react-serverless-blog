@@ -1,15 +1,10 @@
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Button, Modal, Select } from "antd";
-import {
-  getChangePageChildrenAction,
-  getDeletePageChildrenAction,
-} from "../../../../store/action.js";
 import { cloneDeep } from "lodash";
+import { Button, Modal, Select } from "antd";
+import useSchemaData from "../../../../../hooks/useSchemaData.js";
 import styles from "./areaitem.module.scss";
-
 import Banner from "./component/Banner";
 import Notes from "./component/Notes";
 import Footer from "./component/Footer";
@@ -17,23 +12,11 @@ import Footer from "./component/Footer";
 const { Option } = Select;
 const map = { Banner, Notes, Footer };
 
-const useStore = (index) => {
-  const dispatch = useDispatch();
-  const pageChild = useSelector(
-    (state) => state.common.schema.children?.[index] || {}
-  );
-  const changePageChild = (temp) => {
-    dispatch(getChangePageChildrenAction(index, temp));
-  };
-  const removePageChild = () => {
-    dispatch(getDeletePageChildrenAction(index));
-  };
-  return { pageChild, changePageChild, removePageChild };
-};
-
 const AreaItem = (props) => {
   const { index, id } = props;
-  const { pageChild, changePageChild, removePageChild } = useStore(index);
+  const { pageChild, changePageChild, removePageChild } = useSchemaData({
+    index,
+  });
   const { setNodeRef, listeners, transform } = useSortable({ id });
 
   const [isModelVisible, setIsModelVisible] = useState(false);
@@ -41,7 +24,7 @@ const AreaItem = (props) => {
 
   useEffect(() => {
     setTemp(cloneDeep(pageChild));
-  }, [pageChild]);
+  }, []);
 
   const style = {
     transform: CSS.Transform.toString(transform),
