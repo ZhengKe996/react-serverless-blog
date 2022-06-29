@@ -4,7 +4,7 @@ module.exports = function (app) {
   app.use(
     "/api",
     createProxyMiddleware({
-      target: "https://all-serverlg-server-uuxkrgefgf.cn-hangzhou.fcapp.run",
+      target: "serverless-blog.fanzhengke.top",
       changeOrigin: true,
     })
   );
