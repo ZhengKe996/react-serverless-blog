@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Provider } from "react-redux";
+import { initAuthClient, getAuthClient } from "@authing/react-ui-components";
 import { Layout, Menu, message } from "antd";
 import store from "../store";
 import HomeManagement from "./container/HomeManagement";
 import BasicSetting from "./container/BasicSetting";
 import Login from "./container/Login";
 import useSchemaData from "../hooks/useSchemaData";
-import { parseJsonByString } from "../utils";
+import { parseJsonByString, getLoginStatus, clearLogout } from "../utils";
 import service from "../service";
 import styles from "./style.module.scss";
 
@@ -17,7 +18,9 @@ import "./style.scss";
 import "antd/dist/antd.css";
 
 const { Header, Sider, Content } = Layout;
-
+initAuthClient({
+  appId: "62bc6937492a7916dbb6f7bf",
+});
 const useCollapsed = () => {
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = () => {
@@ -29,7 +32,9 @@ const useCollapsed = () => {
 const Wrapper = () => {
   const { changeSchema } = useSchemaData();
   const { collapsed, toggleCollapsed } = useCollapsed();
-  const token = window.localStorage._authing_token;
+  const login = getLoginStatus();
+  const { username, photo } = window.localStorage;
+
   useEffect(() => {
     service.get("/api/schema/getLatestOne").then((res) => {
       const { data = null, success = false } = res;
@@ -42,7 +47,13 @@ const Wrapper = () => {
   const handleHomePageRedirect = () => {
     window.location.href = "/";
   };
-  return token ? (
+
+  const handleLogout = () => {
+    getAuthClient().logout();
+    clearLogout();
+    window.location.reload();
+  };
+  return login ? (
     <Router>
       <Layout>
         <Sider
@@ -84,6 +95,11 @@ const Wrapper = () => {
                 &#xe67f;
               </span>
             )}
+
+            <div className={styles.info} onClick={handleLogout}>
+              <img className={styles.avatar} src={photo} alt />
+              <span className={styles.username}>{username}</span>
+            </div>
           </Header>
           <Content className={styles.content}>
             <Routes>
